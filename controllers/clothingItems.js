@@ -39,8 +39,8 @@ const deleteItems = (req, res) => {
     console.error(err)
     if (err.name === "DocumentNotFoundError") {
       return error404(res, err)
-    } else if
-      (err.name === "CastError") {
+    }
+    if (err.name === "CastError") {
         return error400(res, err)
       }
       return error500(res, err)
