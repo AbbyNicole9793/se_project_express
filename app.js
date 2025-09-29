@@ -4,7 +4,7 @@ const indexRouter = require("./routes/index")
 
 const app = express()
 
-const {PORT = 3001} = process.env
+const { PORT = 3001 } = process.env;
 
 
 
@@ -27,7 +27,6 @@ app.use((req, res, next) => {
   res.status(404).send({
   "message": "Requested resource not found"
 })
-  next()
 })
 
 

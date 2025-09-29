@@ -10,13 +10,13 @@ const getItems = (req, res) => {
     })
     .catch((err) => {
       console.error(err)
-      error500(res, err)
+      return error500(res, err)
     })
 }
 
 const createItems = (req, res) => {
   console.log(req.user._id)
-  const { name, weather, imageUrl} = req.body
+  const { name, weather, imageUrl } = req.body
   const userId = req.user._id
 
   Item.create({name, weather, imageUrl, owner: userId})
@@ -24,26 +24,26 @@ const createItems = (req, res) => {
     .catch((err) => {
       console.error(err)
       if (err.name === "ValidationError") {
-        error400(res, err)
+        return error400(res, err)
       }
-      error500(res, err)
+      return error500(res, err)
     })
 }
 
 const deleteItems = (req, res) => {
-  const {objectId} = req.params
-  Item.findByIdAndDelete(objectId)
+  const { ItemId } = req.params
+  Item.findByIdAndDelete(ItemId)
   .orFail()
   .then((item) => res.status(200).send(item))
   .catch((err) => {
     console.error(err)
-    if (err.name === "NotFound") {
-      error404(res, err)
+    if (err.name === "DocumentNotFoundError") {
+      return error404(res, err)
     } else if
       (err.name === "CastError") {
-        error400(res, err)
+        return error400(res, err)
       }
-      error500(res, err)
+      return error500(res, err)
   })
 }
 
@@ -56,7 +56,7 @@ const likeItem = (req, res) => Item.findByIdAndUpdate(
     .then((item) => res.send(item))
     .catch((err) => {
       console.error(err);
-      if (err.message === "NotFound") {
+      if (err.message === "DocumentNotFoundError") {
         return error404(res, err);
       }
       if (err.name === "CastError") {
@@ -75,7 +75,7 @@ const dislikeItem = (req, res) => Item.findByIdAndUpdate(
     .then((item) => res.send(item))
     .catch((err) => {
       console.error(err);
-      if (err.message === "NotFound") {
+      if (err.message === "DocumentNotFoundError") {
         return error404(res, err);
       }
       if (err.name === "CastError") {
