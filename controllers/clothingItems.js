@@ -10,7 +10,7 @@ const getItems = (req, res) => {
     })
     .catch((err) => {
       console.error(err)
-      error500(res)
+      error500(res, err)
     })
 }
 
@@ -24,9 +24,9 @@ const createItems = (req, res) => {
     .catch((err) => {
       console.error(err)
       if (err.name === "ValidationError") {
-        error400(res)
+        error400(res, err)
       }
-      error500(res)
+      error500(res, err)
     })
 }
 
@@ -38,16 +38,16 @@ const deleteItems = (req, res) => {
   .catch((err) => {
     console.error(err)
     if (err.name === "NotFound") {
-      error404(res)
+      error404(res, err)
     } else if
       (err.name === "CastError") {
-        error400(res)
+        error400(res, err)
       }
-      error500(res)
+      error500(res, err)
   })
 }
 
-const likeItem = (req, res) => ClothingItem.findByIdAndUpdate(
+const likeItem = (req, res) => Item.findByIdAndUpdate(
   req.params.itemId,
   { $addToSet: { likes: req.user._id } },
   { new: true },
@@ -57,16 +57,16 @@ const likeItem = (req, res) => ClothingItem.findByIdAndUpdate(
     .catch((err) => {
       console.error(err);
       if (err.message === "NotFound") {
-        return error404(res);
+        return error404(res, err);
       }
       if (err.name === "CastError") {
-        return error400(res);
+        return error400(res, err);
       }
-      return error500(res);
+      return error500(res, err);
     });
 
 
-const dislikeItem = (req, res) => ClothingItem.findByIdAndUpdate(
+const dislikeItem = (req, res) => Item.findByIdAndUpdate(
   req.params.itemId,
   { $pull: { likes: req.user._id } },
   { new: true },
@@ -76,12 +76,12 @@ const dislikeItem = (req, res) => ClothingItem.findByIdAndUpdate(
     .catch((err) => {
       console.error(err);
       if (err.message === "NotFound") {
-        return error404(res);
+        return error404(res, err);
       }
       if (err.name === "CastError") {
-        return error400(res);
+        return error400(res, err);
       }
-      return error500(res);
+      return error500(res, err);
     });
 
 

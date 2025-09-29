@@ -9,9 +9,9 @@ const getUsers = (req, res) => {
     .catch((err) => {
       console.error(err)
       if (err.name === "ValidationError") {
-        error400(res)
+        error400(res, err)
       }
-      error500(res)
+      error500(res, err)
     })
 
 }
@@ -24,12 +24,12 @@ const getUser = (req, res) => {
   .catch((err) => {
     console.error(err)
     if (err.name === "DocumentNotFoundError") {
-      error404(res)
+      error404(res, err)
     } else if
       (err.name === "CastError") {
-        error400(res)
+        error400(res, err)
       }
-      error500(res)
+      error500(res, err)
   })
 }
 
@@ -41,9 +41,9 @@ const createUser = (req, res) => {
     .catch((err) => {
       console.error(err)
       if (err.name === "ValidationError") {
-        error400(res)
+        error400(res, err)
       }
-      error500(res)
+      error500(res, err)
     })
 }
 
