@@ -31,8 +31,8 @@ const createItems = (req, res) => {
 }
 
 const deleteItems = (req, res) => {
-  const { ItemId } = req.params
-  Item.findByIdAndDelete(ItemId)
+  const { itemId } = req.params
+  Item.findByIdAndDelete(itemId)
   .orFail()
   .then((item) => res.status(200).send(item))
   .catch((err) => {
@@ -56,7 +56,7 @@ const likeItem = (req, res) => Item.findByIdAndUpdate(
     .then((item) => res.send(item))
     .catch((err) => {
       console.error(err);
-      if (err.message === "DocumentNotFoundError") {
+      if (err.name === "DocumentNotFoundError") {
         return error404(res, err);
       }
       if (err.name === "CastError") {
@@ -75,7 +75,7 @@ const dislikeItem = (req, res) => Item.findByIdAndUpdate(
     .then((item) => res.send(item))
     .catch((err) => {
       console.error(err);
-      if (err.message === "DocumentNotFoundError") {
+      if (err.name === "DocumentNotFoundError") {
         return error404(res, err);
       }
       if (err.name === "CastError") {
