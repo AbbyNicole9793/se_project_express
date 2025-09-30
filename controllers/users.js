@@ -1,5 +1,5 @@
 const User = require("../models/user")
-const {error400, error404, error500} = require("../utils/errors")
+const { BAD_REQUEST, NOT_FOUND, SERVER_ERROR } = require("../utils/errors")
 
 const getUsers = (req, res) => {
   User.find({})
@@ -8,10 +8,7 @@ const getUsers = (req, res) => {
       })
     .catch((err) => {
       console.error(err)
-      if (err.name === "ValidationError") {
-        return error400(res, err)
-      }
-      return error500(res, err)
+      return res.status(SERVER_ERROR).send({ message: "An error has occurred on the server" })
     })
 
 }
@@ -24,12 +21,12 @@ const getUser = (req, res) => {
   .catch((err) => {
     console.error(err)
     if (err.name === "DocumentNotFoundError") {
-      return error404(res, err)
+      return res.status(NOT_FOUND).send({ message: "An error has occurred on the server" })
     }
     if (err.name === "CastError") {
-        return error400(res, err)
+        return res.status(BAD_REQUEST).send({ message: "An error has occurred on the server" })
       }
-      return error500(res, err)
+      return res.status(SERVER_ERROR).send({ message: "An error has occurred on the server" })
   })
 }
 
@@ -41,9 +38,9 @@ const createUser = (req, res) => {
     .catch((err) => {
       console.error(err)
       if (err.name === "ValidationError") {
-        return error400(res, err)
+        return res.status(BAD_REQUEST).send({ message: "An error has occurred on the server" })
       }
-      return error500(res, err)
+      return res.status(SERVER_ERROR).send({ message: "An error has occurred on the server" })
     })
 }
 

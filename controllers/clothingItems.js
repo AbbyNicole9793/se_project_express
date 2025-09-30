@@ -1,5 +1,5 @@
 const Item = require("../models/clothingItem")
-const {error400, error404, error500} = require("../utils/errors")
+const {BAD_REQUEST, NOT_FOUND, SERVER_ERROR} = require("../utils/errors")
 
 
 
@@ -10,7 +10,7 @@ const getItems = (req, res) => {
     })
     .catch((err) => {
       console.error(err)
-      return error500(res, err)
+      return res.status(SERVER_ERROR).send({ message: "An error has occurred on the server" })
     })
 }
 
@@ -24,9 +24,9 @@ const createItems = (req, res) => {
     .catch((err) => {
       console.error(err)
       if (err.name === "ValidationError") {
-        return error400(res, err)
+        return res.status(BAD_REQUEST).send({ message: "An error has occurred on the server" })
       }
-      return error500(res, err)
+      return res.status(SERVER_ERROR).send({ message: "An error has occurred on the server" })
     })
 }
 
@@ -38,12 +38,12 @@ const deleteItems = (req, res) => {
   .catch((err) => {
     console.error(err)
     if (err.name === "DocumentNotFoundError") {
-      return error404(res, err)
+      return res.status(NOT_FOUND).send({ message: "An error has occurred on the server" })
     }
     if (err.name === "CastError") {
-        return error400(res, err)
+        return res.status(BAD_REQUEST).send({ message: "An error has occurred on the server" })
       }
-      return error500(res, err)
+      return res.status(SERVER_ERROR).send({ message: "An error has occurred on the server" })
   })
 }
 
@@ -57,12 +57,12 @@ const likeItem = (req, res) => Item.findByIdAndUpdate(
     .catch((err) => {
       console.error(err);
       if (err.name === "DocumentNotFoundError") {
-        return error404(res, err);
+        return res.status(NOT_FOUND).send({ message: "An error has occurred on the server" })
       }
       if (err.name === "CastError") {
-        return error400(res, err);
+        return res.status(BAD_REQUEST).send({ message: "An error has occurred on the server" })
       }
-      return error500(res, err);
+      return res.status(SERVER_ERROR).send({ message: "An error has occurred on the server" })
     });
 
 
@@ -76,12 +76,12 @@ const dislikeItem = (req, res) => Item.findByIdAndUpdate(
     .catch((err) => {
       console.error(err);
       if (err.name === "DocumentNotFoundError") {
-        return error404(res, err);
+        return res.status(NOT_FOUND).send({ message: "An error has occurred on the server" })
       }
       if (err.name === "CastError") {
-        return error400(res, err);
+       return res.status(BAD_REQUEST).send({ message: "An error has occurred on the server" })
       }
-      return error500(res, err);
+      return res.status(SERVER_ERROR).send({ message: "An error has occurred on the server" })
     });
 
 
