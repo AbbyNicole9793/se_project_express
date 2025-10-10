@@ -1,6 +1,7 @@
 const express = require("express")
 const mongoose = require("mongoose")
 const cors = require("cors")
+require('dotenv').config()
 const indexRouter = require("./routes/index");
 const { NOT_FOUND } = require("./utils/errors");
 const { login, createUser } = require("./controllers/users")
@@ -23,8 +24,9 @@ mongoose
 app.use(express.json())
 app.use(cors())
 
-app.post('/signin', login);
 app.post('/signup', createUser);
+app.post('/signin', login);
+
 
 
 
