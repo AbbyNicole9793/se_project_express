@@ -21,7 +21,7 @@ module.exports = (req, res, next) => {
       .send({ message: 'Authorization Required' });
   }
 
-  req.user = payload;
+  return req.user = payload;
 
   next();
 };
