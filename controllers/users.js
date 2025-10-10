@@ -1,5 +1,5 @@
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken")
 const User = require("../models/user")
 const { BAD_REQUEST, UNAUTHORIZED, NOT_FOUND, SERVER_ERROR, CONFLICT_ERROR } = require("../utils/errors")
 const { JWT_SECRET } = require("../utils/config")
@@ -44,7 +44,7 @@ const createUser = (req, res) => {
 
 
       return bcrypt.hash(password, 10)
-        .then(hash => User.create({name, avatar, email: email, password: hash}))
+        .then(hash => User.create({name, avatar, email, password: hash}))
         .then((user) => {
           const newUser = user.toObject()
           delete newUser.password
@@ -95,7 +95,7 @@ const updateProfile = (req, res) => {
       if (!user) {
         return res.status(NOT_FOUND).send({ message: "User not found" });
       }
-      res.send(user);
+      return res.send(user);
     })
     .catch((err) => {
       console.error(err);
