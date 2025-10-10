@@ -2,6 +2,9 @@ const express = require("express")
 const mongoose = require("mongoose")
 const indexRouter = require("./routes/index");
 const { NOT_FOUND } = require("./utils/errors");
+const { login, createUser } = require("./controllers/users")
+const auth = require('./middleware/auth');
+const cors = require("cors")
 
 const app = express()
 
@@ -17,12 +20,7 @@ mongoose
   .catch(console.error)
 
 app.use(express.json())
-app.use((req, res, next) => {
-  req.user = {
-    _id: '68d9ba9feecefa64ebb1e906'
-  };
-  next();
-});
+
 app.use("/", indexRouter)
 app.use((req, res) => {
   res.status(NOT_FOUND).send({
@@ -30,7 +28,11 @@ app.use((req, res) => {
 })
 })
 
+app.post('/signin', login);
+app.post('/signup', createUser);
 
+app.use(auth)
+app.use(cors())
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)
 })

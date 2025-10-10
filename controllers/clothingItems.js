@@ -1,5 +1,5 @@
 const Item = require("../models/clothingItem")
-const {BAD_REQUEST, NOT_FOUND, SERVER_ERROR} = require("../utils/errors")
+const {BAD_REQUEST, NOT_FOUND, SERVER_ERROR, UNAUTHORIZED_USER} = require("../utils/errors")
 
 
 
@@ -32,9 +32,15 @@ const createItems = (req, res) => {
 
 const deleteItems = (req, res) => {
   const { itemId } = req.params
+  const userId = req.user._id
+
   Item.findByIdAndDelete(itemId)
   .orFail()
-  .then((item) => res.status(200).send(item))
+  .then((item) => {
+    if (item.owner.toString() !== userId) {
+      return res.status(UNAUTHORIZED_USER).send({ message: "You are not authorized to delete this item"})
+    }
+    res.status(200).send(item)})
   .catch((err) => {
     console.error(err)
     if (err.name === "DocumentNotFoundError") {
