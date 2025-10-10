@@ -21,19 +21,26 @@ mongoose
   .catch(console.error)
 
 app.use(express.json())
-
-app.use("/", indexRouter)
-app.use((req, res) => {
-  res.status(NOT_FOUND).send({
-  "message": "Requested resource not found"
-})
-})
+app.use(cors())
 
 app.post('/signin', login);
 app.post('/signup', createUser);
 
+
+
+app.use((req, res, next) => {
+  req.user = { _id: "5d8b8592978f8bd833ca8133",}
+next()
+})
+
+
 app.use(auth)
-app.use(cors())
+app.use("/", indexRouter)
+
+app.use((req, res) => {
+  res.status(NOT_FOUND).send({ message: "Requested resource not found" });
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)
 })
