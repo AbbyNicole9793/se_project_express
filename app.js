@@ -1,10 +1,11 @@
 const express = require("express")
 const mongoose = require("mongoose")
+const cors = require("cors")
 const indexRouter = require("./routes/index");
 const { NOT_FOUND } = require("./utils/errors");
 const { login, createUser } = require("./controllers/users")
 const auth = require('./middleware/auth');
-const cors = require("cors")
+
 
 const app = express()
 

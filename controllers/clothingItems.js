@@ -40,7 +40,7 @@ const deleteItems = (req, res) => {
     if (item.owner.toString() !== userId) {
       return res.status(UNAUTHORIZED_USER).send({ message: "You are not authorized to delete this item"})
     }
-    res.status(200).send(item)})
+    return res.status(200).send(item)})
   .catch((err) => {
     console.error(err)
     if (err.name === "DocumentNotFoundError") {
