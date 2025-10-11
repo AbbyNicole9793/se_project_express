@@ -6,7 +6,6 @@ const indexRouter = require("./routes/index");
 const { NOT_FOUND } = require("./utils/errors");
 const { login, createUser } = require("./controllers/users")
 const auth = require('./middlewares/auth');
-const { getItems } = require("./controllers/clothingItems");
 
 
 const app = express()
@@ -27,7 +26,7 @@ app.use(cors())
 
 app.post('/signup', createUser);
 app.post('/signin', login);
-app.get("/", getItems)
+
 
 app.use(auth)
 app.use("/", indexRouter)
