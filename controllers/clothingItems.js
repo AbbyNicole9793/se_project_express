@@ -34,7 +34,7 @@ const deleteItems = (req, res) => {
   const { itemId } = req.params
   const userId = req.user._id
 
-  Item.findByIdAndDelete(itemId)
+  Item.findById(itemId)
   .orFail()
   .then((item) => {
     if (item.owner.toString() !== userId) {
