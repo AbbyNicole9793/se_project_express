@@ -94,4 +94,4 @@ const updateProfile = (req, res) => {
     });
 };
 
-module.exports = {getUsers, createUser, getCurrentUser, login, updateProfile}
+module.exports = {createUser, getCurrentUser, login, updateProfile}
