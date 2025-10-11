@@ -5,7 +5,7 @@ require('dotenv').config()
 const indexRouter = require("./routes/index");
 const { NOT_FOUND } = require("./utils/errors");
 const { login, createUser } = require("./controllers/users")
-const auth = require('./middleware/auth');
+const auth = require('./middlewares/auth');
 const { getItems } = require("./controllers/clothingItems");
 
 
