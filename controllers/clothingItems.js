@@ -1,6 +1,6 @@
 const Item = require("../models/clothingItem")
 const {BAD_REQUEST, NOT_FOUND, SERVER_ERROR, UNAUTHORIZED_USER} = require("../utils/errors")
-
+const mongoose = require("mongoose")
 
 
 const getItems = (req, res) => {
@@ -35,6 +35,7 @@ const deleteItems = (req, res) => {
   const userId = req.user._id
 
   Item.findById(itemId)
+  .orFail()
   .then((item) => {
     if (item.owner.toString() !== userId) {
       return res.status(UNAUTHORIZED_USER).send({ message: "You are not authorized to delete this item"})
@@ -44,7 +45,7 @@ const deleteItems = (req, res) => {
       res.status(200).send({message: "Item deleted successfuly"})})
   .catch((err) => {
     console.error(err)
-    if (err.name === "DocumentNotFoundError") {
+    if (err instanceof mongoose.Error.DocumentNotFoundError) {
       return res.status(NOT_FOUND).send({ message: "An error has occurred on the server" })
     }
     if (err.name === "CastError") {
@@ -59,10 +60,11 @@ const likeItem = (req, res) => Item.findByIdAndUpdate(
   { $addToSet: { likes: req.user._id } },
   { new: true },
 )
+  .orFail()
     .then((item) => res.send(item))
     .catch((err) => {
       console.error(err);
-      if (err.name === "DocumentNotFoundError") {
+      if (err instanceof mongoose.Error.DocumentNotFoundError) {
         return res.status(NOT_FOUND).send({ message: "An error has occurred on the server" })
       }
       if (err.name === "CastError") {
@@ -77,10 +79,11 @@ const dislikeItem = (req, res) => Item.findByIdAndUpdate(
   { $pull: { likes: req.user._id } },
   { new: true },
 )
+  .orFail()
     .then((item) => res.send(item))
     .catch((err) => {
       console.error(err);
-      if (err.name === "DocumentNotFoundError") {
+      if (err instanceof mongoose.Error.DocumentNotFoundError) {
         return res.status(NOT_FOUND).send({ message: "An error has occurred on the server" })
       }
       if (err.name === "CastError") {

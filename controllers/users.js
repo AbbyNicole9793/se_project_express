@@ -3,14 +3,16 @@ const jwt = require("jsonwebtoken")
 const User = require("../models/user")
 const { BAD_REQUEST, UNAUTHORIZED, NOT_FOUND, SERVER_ERROR, CONFLICT_ERROR } = require("../utils/errors")
 const { JWT_SECRET } = require("../utils/config")
+const mongoose = require("mongoose")
 
 const getCurrentUser = (req, res) => {
   const userId = req.user._id
   User.findById(userId)
+  .orFail()
   .then((user) => res.status(200).send(user))
   .catch((err) => {
     console.error(err)
-    if (err.name === "DocumentNotFoundError") {
+    if (err instanceof mongoose.Error.DocumentNotFoundError) {
       return res.status(NOT_FOUND).send({ message: "User not found" })
     }
     if (err.name === "CastError") {
