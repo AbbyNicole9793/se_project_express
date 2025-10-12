@@ -7,7 +7,6 @@ const { JWT_SECRET } = require("../utils/config")
 const getCurrentUser = (req, res) => {
   const userId = req.user._id
   User.findById(userId)
-  .orFail()
   .then((user) => res.status(200).send(user))
   .catch((err) => {
     console.error(err)

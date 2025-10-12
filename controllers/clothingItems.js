@@ -35,7 +35,6 @@ const deleteItems = (req, res) => {
   const userId = req.user._id
 
   Item.findById(itemId)
-  .orFail()
   .then((item) => {
     if (item.owner.toString() !== userId) {
       return res.status(UNAUTHORIZED_USER).send({ message: "You are not authorized to delete this item"})
@@ -60,7 +59,6 @@ const likeItem = (req, res) => Item.findByIdAndUpdate(
   { $addToSet: { likes: req.user._id } },
   { new: true },
 )
-  .orFail()
     .then((item) => res.send(item))
     .catch((err) => {
       console.error(err);
@@ -79,7 +77,6 @@ const dislikeItem = (req, res) => Item.findByIdAndUpdate(
   { $pull: { likes: req.user._id } },
   { new: true },
 )
-  .orFail()
     .then((item) => res.send(item))
     .catch((err) => {
       console.error(err);
