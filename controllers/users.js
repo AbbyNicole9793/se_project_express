@@ -1,9 +1,10 @@
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
+const mongoose = require("mongoose")
 const User = require("../models/user")
 const { BAD_REQUEST, UNAUTHORIZED, NOT_FOUND, SERVER_ERROR, CONFLICT_ERROR } = require("../utils/errors")
 const { JWT_SECRET } = require("../utils/config")
-const mongoose = require("mongoose")
+
 
 const getCurrentUser = (req, res) => {
   const userId = req.user._id
