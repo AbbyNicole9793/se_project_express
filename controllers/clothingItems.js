@@ -34,6 +34,10 @@ const deleteItems = (req, res) => {
   const { itemId } = req.params
   const userId = req.user._id
 
+ if (!mongoose.Types.ObjectId.isValid(itemId)) {
+    return res.status(BAD_REQUEST).send({ message: "Invalid item ID format" });
+  }
+
   Item.findById(itemId)
   .orFail()
   .then((item) => {
@@ -41,7 +45,8 @@ const deleteItems = (req, res) => {
       return res.status(UNAUTHORIZED_USER).send({ message: "You are not authorized to delete this item"})
     }
     return Item.deleteOne({ _id: itemId })
-    .then(() => {
+  })
+  .then(() => {
       res.status(200).send({message: "Item deleted successfuly"})})
   .catch((err) => {
     console.error(err)
@@ -53,7 +58,7 @@ const deleteItems = (req, res) => {
       }
       return res.status(SERVER_ERROR).send({ message: "An error has occurred on the server" })
   })
-})
+
 }
 
 const likeItem = (req, res) => Item.findByIdAndUpdate(
