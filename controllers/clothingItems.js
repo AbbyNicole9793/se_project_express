@@ -44,10 +44,10 @@ const deleteItems = (req, res) => {
     if (item.owner.toString() !== userId) {
       return res.status(UNAUTHORIZED_USER).send({ message: "You are not authorized to delete this item"})
     }
-    return Item.deleteOne({ _id: itemId })
   })
-  .then(() => {
-      return res.status(200).send({message: "Item deleted successfuly"})})
+
+    return Item.deleteOne({ _id: itemId })
+  .then(() => res.status(200).send({message: "Item deleted successfuly"}))
   .catch((err) => {
     console.error(err)
     if (err instanceof mongoose.Error.DocumentNotFoundError) {
