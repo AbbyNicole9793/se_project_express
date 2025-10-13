@@ -44,21 +44,20 @@ const deleteItems = (req, res) => {
     if (item.owner.toString() !== userId) {
       return res.status(UNAUTHORIZED_USER).send({ message: "You are not authorized to delete this item"})
     }
-  })
 
     return Item.deleteOne({ _id: itemId })
-  .then(() => res.status(200).send({message: "Item deleted successfuly"}))
-  .catch((err) => {
-    console.error(err)
-    if (err instanceof mongoose.Error.DocumentNotFoundError) {
-      return res.status(NOT_FOUND).send({ message: "An error has occurred on the server" })
-    }
-    if (err.name === "CastError") {
-        return res.status(BAD_REQUEST).send({ message: "An error has occurred on the server" })
-      }
-      return res.status(SERVER_ERROR).send({ message: "An error has occurred on the server" })
-  })
-
+      .then(() => res.status(200).send({message: "Item deleted successfuly"}))
+      .catch((err) => {
+       console.error(err)
+       if (err instanceof mongoose.Error.DocumentNotFoundError) {
+          return res.status(NOT_FOUND).send({ message: "An error has occurred on the server" })
+        }
+        if (err.name === "CastError") {
+           return res.status(BAD_REQUEST).send({ message: "An error has occurred on the server" })
+          }
+         return res.status(SERVER_ERROR).send({ message: "An error has occurred on the server" })
+      })
+    })
 }
 
 const likeItem = (req, res) => Item.findByIdAndUpdate(
