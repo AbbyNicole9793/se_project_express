@@ -40,7 +40,7 @@ const deleteItems = (req, res) => {
     if (item.owner.toString() !== userId) {
       return res.status(UNAUTHORIZED_USER).send({ message: "You are not authorized to delete this item"})
     }
-    return Item.deleteOne({ _id: itemId })})
+    return Item.deleteOne({ _id: itemId })
     .then(() => {
       res.status(200).send({message: "Item deleted successfuly"})})
   .catch((err) => {
@@ -53,6 +53,7 @@ const deleteItems = (req, res) => {
       }
       return res.status(SERVER_ERROR).send({ message: "An error has occurred on the server" })
   })
+})
 }
 
 const likeItem = (req, res) => Item.findByIdAndUpdate(

@@ -15,3 +15,10 @@ This project is done using Express, Mongoose, and Validator. I hope to eventuall
 ##### Description of tech stack 
 
 This project is broken down into several different modules starting with the main directories including controllers, models, routes, and utils. This includes an app.js in the root directory that is the central file used to run the program.
+
+###### Project Pitch
+
+I am unable to download the video and post to my google drive as it is only on the premium account that it will let me download it, so here is a direct link to my loom account.
+
+ Check out AbbyFerguson-ProjectPitch-Express(https://www.loom.com/share/bd7714c6d3664b828a7796db21235e27?sid=47478038-e919-46b8-b132-40ed094e5eca), where I describe my project and some challenges I faced while building it.
+

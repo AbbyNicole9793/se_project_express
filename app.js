@@ -5,7 +5,6 @@ require('dotenv').config()
 const indexRouter = require("./routes/index");
 const { NOT_FOUND } = require("./utils/errors");
 const { login, createUser } = require("./controllers/users")
-const auth = require('./middlewares/auth');
 
 
 const app = express()
@@ -28,7 +27,6 @@ app.post('/signup', createUser);
 app.post('/signin', login);
 
 
-app.use(auth)
 app.use("/", indexRouter)
 
 app.use((req, res) => {
