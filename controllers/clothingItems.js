@@ -47,7 +47,7 @@ const deleteItems = (req, res) => {
     return Item.deleteOne({ _id: itemId })
   })
   .then(() => {
-      res.status(200).send({message: "Item deleted successfuly"})})
+      return res.status(200).send({message: "Item deleted successfuly"})})
   .catch((err) => {
     console.error(err)
     if (err instanceof mongoose.Error.DocumentNotFoundError) {
