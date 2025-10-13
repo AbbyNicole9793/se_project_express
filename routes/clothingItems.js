@@ -1,7 +1,10 @@
 const router = require("express").Router()
 const { createItems, deleteItems, likeItem, dislikeItem, getItems} = require("../controllers/clothingItems")
+const auth = require("../middlewares/auth")
 
 router.get("/", getItems)
+
+router.use(auth)
 
 router.post("/", createItems)
 router.delete("/:itemId", deleteItems)
