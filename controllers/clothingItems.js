@@ -23,7 +23,7 @@ const createItems = (req, res) => {
     return res.status(UNAUTHORIZED_USER).send({ message: "An error has occurred on the server" })
   }
 
-  Item.create({ name, weather, imageUrl, owner: userId })
+  return Item.create({ name, weather, imageUrl, owner: userId })
     .then((item) => res.status(201).send(item))
     .catch((err) => {
       console.error(err)
@@ -42,7 +42,7 @@ const deleteItems = (req, res) => {
     return res.status(BAD_REQUEST).send({ message: "Invalid item ID format" });
   }
 
-  Item.findById(itemId)
+  return Item.findById(itemId)
     .orFail()
     .then((item) => {
       if (item.owner.toString() !== userId) {
