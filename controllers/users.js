@@ -24,7 +24,7 @@ const getCurrentUser = (req, res) => {
 }
 
 const createUser = (req, res) => {
-  const { name, avatar, email, password} = req.body
+  const { email, password, name, avatar } = req.body
 
   User.findOne({ email })
     .then((matched) => {
@@ -34,7 +34,7 @@ const createUser = (req, res) => {
 
 
       return bcrypt.hash(password, 10)
-        .then(hash => User.create({name, avatar, email, password: hash}))
+        .then(hash => User.create({email, password: hash, name, avatar}))
         .then((user) => {
           const newUser = user.toObject()
           delete newUser.password
