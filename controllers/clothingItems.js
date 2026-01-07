@@ -20,17 +20,16 @@ const createItems = (req, res, next) => {
   const userId = req.user?._id;
 
   if (!userId) {
-    return next(new UnauthorizedError("User not authorized"));
+    next(new UnauthorizedError("User not authorized"));
   }
 
   Item.create({ name, weather, imageUrl, owner: userId })
     .then((item) => res.status(201).send(item))
     .catch((err) => {
       if (err.name === "ValidationError") {
-        return next(new BadRequestError("Invalid item data"));
+        next(new BadRequestError("Invalid item data"));
       }
-
-      return next(err);
+      return next(err)
     });
 };
 
@@ -39,14 +38,14 @@ const deleteItems = (req, res, next) => {
   const userId = req.user._id;
 
   if (!mongoose.Types.ObjectId.isValid(itemId)) {
-    return next(new BadRequestError("Invalid item ID format"));
+    next(new BadRequestError("Invalid item ID format"));
   }
 
   Item.findById(itemId)
     .orFail(() => new NotFoundError("Item not found"))
     .then((item) => {
       if (item.owner.toString() !== userId) {
-        return next(new ForbiddenError("You are not allowed to delete this item"));
+        next(new ForbiddenError("You are not allowed to delete this item"));
       }
 
       return item.deleteOne().then(() => {
@@ -55,7 +54,7 @@ const deleteItems = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === "CastError") {
-        return next(new BadRequestError("Invalid item ID format"));
+       next(new BadRequestError("Invalid item ID format"));
       }
       return next(err);
     });

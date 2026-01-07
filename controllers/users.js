@@ -1,6 +1,5 @@
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-const mongoose = require("mongoose")
 const User = require("../models/user")
 const { JWT_SECRET } = require("../utils/config")
 const BadRequestError = require("../utils/errors/BadRequestError")
@@ -63,7 +62,7 @@ const login = (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return next(new BadRequestError("Email and password are required"));
+    next(new BadRequestError("Email and password are required"));
   }
 
   User.findUserByCredentials(email, password)
@@ -72,7 +71,6 @@ const login = (req, res, next) => {
       res.send({ token });
     })
     .catch(() => {
-
       next(new UnauthorizedError("Invalid email or password"));
     });
 };
