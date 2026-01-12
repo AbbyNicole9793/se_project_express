@@ -27,7 +27,7 @@ const createItems = (req, res, next) => {
     .then((item) => res.status(201).send(item))
     .catch((err) => {
       if (err.name === "ValidationError") {
-        next(new BadRequestError("Invalid item data"));
+        return next(new BadRequestError("Invalid item data"));
       }
       return next(err)
     });
@@ -45,7 +45,7 @@ const deleteItems = (req, res, next) => {
     .orFail(() => new NotFoundError("Item not found"))
     .then((item) => {
       if (item.owner.toString() !== userId) {
-        next(new ForbiddenError("You are not allowed to delete this item"));
+        return next(new ForbiddenError("You are not allowed to delete this item"));
       }
 
       return item.deleteOne().then(() => {
@@ -54,7 +54,7 @@ const deleteItems = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === "CastError") {
-       next(new BadRequestError("Invalid item ID format"));
+       return next(new BadRequestError("Invalid item ID format"));
       }
       return next(err);
     });

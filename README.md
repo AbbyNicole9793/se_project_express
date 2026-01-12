@@ -20,12 +20,12 @@ This project is broken down into several different modules starting with the mai
 
 I am unable to download the video and post to my google drive as it is only on the premium account that it will let me download it, so here is a direct link to my loom account.
 
- Check out AbbyFerguson-ProjectPitch-Express(https://www.loom.com/share/bd7714c6d3664b828a7796db21235e27?sid=47478038-e919-46b8-b132-40ed094e5eca), where I describe my project and some challenges I faced while building it.
+[Project Pitch](https://www.loom.com/share/bd7714c6d3664b828a7796db21235e27?sid=47478038-e919-46b8-b132-40ed094e5eca)
 
 ##### Deploy
 
-test0907.crabdance.com
+[website](test0907.crabdance.com)
 
 #### Link to Frontend
 
-https://github.com/AbbyNicole9793/se_project_react
+[frontend](https://github.com/AbbyNicole9793/se_project_react)
