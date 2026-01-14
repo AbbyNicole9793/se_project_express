@@ -1,4 +1,4 @@
-const { SERVER_ERROR } = require("../utils/errors/errors");
+const { SERVER_ERROR } = require("../errors/errors");
 
 function errorHandler(err, req, res, next) {
   console.error(err);

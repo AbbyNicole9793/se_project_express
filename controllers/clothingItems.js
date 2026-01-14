@@ -1,9 +1,9 @@
 const mongoose = require("mongoose")
 const Item = require("../models/clothingItem")
-const BadRequestError = require("../utils/errors/BadRequestError")
-const NotFoundError = require("../utils/errors/NotFoundError")
-const UnauthorizedError = require("../utils/errors/UnauthorizedError")
-const ForbiddenError = require("../utils/errors/ForbiddenError")
+const BadRequestError = require("../errors/BadRequestError")
+const NotFoundError = require("../errors/NotFoundError")
+const UnauthorizedError = require("../errors/UnauthorizedError")
+const ForbiddenError = require("../errors/ForbiddenError")
 
 
 
